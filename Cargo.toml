@@ -4,4 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-mio = { git = "https://github.com/carllerche/mio" }
+tokio = { version = "1.0", features = ["full"] } # Esto es para el Runtime
+serde = { version = "1.0", features = ["derive"] } # Para Serializacion/Deserializacion
+serde_json = "1.0"
+anyhow = "1.0" # Para manejo de errores

@@ -1,25 +1,28 @@
-extern crate mio;
-use mio::*;
+use anyhow::Result;
+use tokio::net::{TcpListener, TcpStream};
+use tokio::sync::broadcast;
 
-struct WebSocketServer;
+#[tokio::main]
+async fn main() -> Result<()> {
 
+    let listener = TcpListener::bind("127.0.0.1:8000").await?;
+    let (destinatario, remitente) = broadcast::channel(10);
 
-impl Handler for WebSocketServer {
-    // Traits can have useful default implementations, so in fact the handler
-    // interface requires us to provide only two things: concrete types for
-    // timeouts and messages.
-    // We're not ready to cover these fancy details, and we wouldn't get to them
-    // anytime soon, so let's get along with the defaults from the mio examples:
-    type Timeout = usize;
-    type Message = ();
+    loop {
+        let (socket, _addr) = listener.accept().await?;
+        let destinatario = destinatario.clone();
+        let mut remitente = destinatario.subscribe();
+
+        tokio::spawn(async move {
+            handle_client(socket, destinatario, remitente).await;
+        });
+    }
 }
 
-
-fn main() {
-    let mut event_loop = EventLoop::new().unwrap();
-    // Create a new instance of our handler struct:
-    let mut handler = WebSocketServer;
-    // ... and provide the event loop with a mutable reference to it:
-    event_loop.run(&mut handler).unwrap();
+async fn handle_client(
+    socket: TcpStream,
+    destinatario: broadcast::Sender<String>,
+    mut remitente: broadcast::Receiver<String>,
+) {
+    // Aqui despues ira la logica para recibir y enviar mensajes
 }
-
