@@ -134,4 +134,16 @@ fn main() {
 
 ```
 
+## Algunos tipos de estructuras de datos nativas
+Se cuenta con algunas estructuras de datos nativas del lenguaje, Tuplas, Arrays y Slices
 
+```rust
+
+// Ejemplo de array estatico que de un tipo especifico [Tipo a guardar; Tamaño]
+let array: [i32; 5] = [1, 2, 3, 4, 5]
+
+// EJemplo de una tupla con diferentes tipos de datos
+
+let tupla = (5u22, 1u8, true, "max")
+
+```
