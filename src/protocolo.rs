@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 
-
 // Se definen los tipos de mensajes
 #[derive(Debug, Serialize, Deserialize)]
 pub enum MessageType {
@@ -9,6 +8,7 @@ pub enum MessageType {
     Text,
 }
 
+// Estructura del mensaje de chat
 #[derive(Debug, Serialize, Deserialize)]
 pub struct ChatMessage {
     pub msg_type: MessageType,
